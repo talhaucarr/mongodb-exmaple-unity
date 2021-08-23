@@ -5,21 +5,25 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 
-public class DatabaseConenction : MonoBehaviour
+namespace _Scripts.Database
 {
-    private MongoClient _client = new MongoClient("mongodb+srv://talha:lara@example.xfait.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
-
-    private IMongoDatabase _database;
-
-    public IMongoDatabase Database
+    public class DatabaseConenction : MonoBehaviour
     {
-        get => _database;
-    }
+        private MongoClient _client = new MongoClient("mongodb+srv://talha:lara@example.xfait.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
 
-    public IMongoDatabase ConnectDatabase(string dbName)
-    {
-        _database = _client.GetDatabase(dbName);
-        return _database;
-    }
+        private IMongoDatabase _database;
 
+        public IMongoDatabase Database
+        {
+            get => _database;
+        }
+
+        public IMongoDatabase ConnectDatabase(string dbName)
+        {
+            _database = _client.GetDatabase(dbName);
+            return _database;
+        }
+
+    }
 }
+

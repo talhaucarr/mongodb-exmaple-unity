@@ -7,50 +7,47 @@ using MongoDB.Driver;
 using TMPro;
 using _Scripts.Managers;
 
-public class RegisterUser : MonoBehaviour
+namespace _Scripts.Database
 {
-    [SerializeField] private TMP_InputField username;
-    [SerializeField] private TMP_InputField password;
-    [SerializeField] private TMP_InputField email;
-
-    [SerializeField] private GameObject errorWindow;
-    
-    public void Register()
+    public class RegisterUser : MonoBehaviour
     {
-        if (IsUserExists())
-        {
-            ErrorManager.Instance.TriggerErrorMessage("Hata","Kullanici adi daha once alinmis!");
-            return;
-        }
-        DatabaseOperations.Instance.InsertRecord("UserCollection",new User{Username = username.text, Password = password.text, Email = email.text});
-    }
+        [SerializeField] private TMP_InputField username;
+        [SerializeField] private TMP_InputField password;
+        [SerializeField] private TMP_InputField email;
 
-    private bool IsUserExists()
-    {
-        var records = DatabaseOperations.Instance.LoadRecords<User>("UserCollection");
-
-        foreach (var record in records)
+        public void Register()
         {
-            if(record.Username == username.text)
-                return true;
+            if (IsUserExists())
+            {
+                ErrorManager.Instance.TriggerErrorMessage("Hata","Kullanici adi daha once alinmis!");
+                return;
+            }
+            DatabaseOperations.Instance.InsertRecord("UserCollection",new User{Username = username.text, Password = password.text, Email = email.text});
+            PanelManager.Instance.SetActiveLoginWindow();
         }
 
-        return false;
+        private bool IsUserExists()
+        {
+            var records = DatabaseOperations.Instance.LoadRecords<User>("UserCollection");
+
+            foreach (var record in records)
+            {
+                if(record.Username == username.text)
+                    return true;
+            }
+
+            return false;
+        }
     }
 
-    private void ErrorWindowHandler()
+    public class User
     {
-        
+        [BsonId]
+        public Guid Id { get; set; }
+        public string Username { get; set; }
+    
+        public string Password { get; set; }
+    
+        public string Email { get; set; }
     }
-}
-
-public class User
-{
-    [BsonId]
-    public Guid Id { get; set; }
-    public string Username { get; set; }
-    
-    public string Password { get; set; }
-    
-    public string Email { get; set; }
 }

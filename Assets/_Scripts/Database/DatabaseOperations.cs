@@ -8,33 +8,36 @@ using MongoDB.Driver;
 using UnityEngine;
 using Utilities;
 
-
-public class DatabaseOperations : AutoCleanupSingleton<DatabaseOperations>
+namespace _Scripts.Database
 {
-    private DatabaseConenction _dbConnection;
-
-    private IMongoDatabase _db;
-
-    private void Start()
+    public class DatabaseOperations : AutoCleanupSingleton<DatabaseOperations>
     {
-        _dbConnection = GetComponent<DatabaseConenction>();
+        private DatabaseConenction _dbConnection;
+
+        private IMongoDatabase _db;
+
+        private void Start()
+        {
+            _dbConnection = GetComponent<DatabaseConenction>();
         
-        _db = _dbConnection.ConnectDatabase("ChatroomDB");
+            _db = _dbConnection.ConnectDatabase("ChatroomDB");
 
-        //InsertRecord("UserCollection", new User{Username = "talla", Password = "talla41", Email = "sad@hotmail.com"});
-    }
+            //InsertRecord("UserCollection", new User{Username = "talla", Password = "talla41", Email = "sad@hotmail.com"});
+        }
 
-    public void InsertRecord<T>(string table, T record)
-    {
-        var collection = _db.GetCollection<T>(table);
-        collection.InsertOne(record);
-    }
+        public void InsertRecord<T>(string table, T record)
+        {
+            var collection = _db.GetCollection<T>(table);
+            collection.InsertOne(record);
+        }
 
-    public List<T> LoadRecords<T>(string table)
-    {
-        var collection = _db.GetCollection<T>(table);
-        return collection.Find(new BsonDocument()).ToList();
+        public List<T> LoadRecords<T>(string table)
+        {
+            var collection = _db.GetCollection<T>(table);
+            return collection.Find(new BsonDocument()).ToList();
+        }
     }
 }
+
 
 
