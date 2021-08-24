@@ -31,12 +31,32 @@ namespace _Scripts.Database
                 if (record.Username == username.text)
                 {
                     if(record.Password == password.text)
+                    {
+                        UpdateStatsManager(record);
                         return true;
+                    }
+                        
                 }
                     
             }
             return false;
         }
+
+        private void UpdateStatsManager(User user)
+        {
+            StatsManager.Instance.Username = user.Username;
+            StatsManager.Instance.Level = user.Informations.Level;
+            StatsManager.Instance.Exp = user.Informations.Exp;
+
+            StatsManager.Instance.Gold = user.Informations.Gold;
+
+            StatsManager.Instance.StatPoints = user.Stats.StatPoints;
+            StatsManager.Instance.HP = user.Stats.HP;
+            StatsManager.Instance.STR = user.Stats.STR;
+            StatsManager.Instance.DEX = user.Stats.DEX;
+            StatsManager.Instance.VIT = user.Stats.VIT;
+        }
+
     }
 }
 

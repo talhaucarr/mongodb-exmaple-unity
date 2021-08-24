@@ -22,7 +22,30 @@ namespace _Scripts.Database
                 ErrorManager.Instance.TriggerErrorMessage("Hata","Kullanici adi daha once alinmis!");
                 return;
             }
-            DatabaseOperations.Instance.InsertRecord("UserCollection",new User{Username = username.text, Password = password.text, Email = email.text});
+
+            User user = new User
+            {
+                Username = username.text,
+                Password = password.text,
+                Email = email.text,
+                Informations = new UserInformations
+                {
+                    Level = 1,
+                    Exp = 0,
+                    Gold = 0
+                },
+                Stats = new UserStats
+                {
+                    StatPoints = 3,
+                    HP = 100,
+                    STR = 10,
+                    DEX = 10,
+                    VIT = 10
+                }
+                
+            };
+
+            DatabaseOperations.Instance.InsertRecord("UserCollection", user);
             PanelManager.Instance.SetActiveLoginWindow();
         }
 
@@ -49,5 +72,24 @@ namespace _Scripts.Database
         public string Password { get; set; }
     
         public string Email { get; set; }
+
+        public UserInformations Informations { get; set; }
+        public UserStats Stats { get; set; }
+    }
+
+    public class UserInformations
+    {
+        public int Level { get; set; }
+        public int Exp { get; set; }
+        public int Gold { get; set; }
+    }
+
+    public class UserStats
+    {
+        public int StatPoints { get; set; }
+        public int HP { get; set; }
+        public int STR { get; set; }
+        public int DEX { get; set; }
+        public int VIT { get; set; }
     }
 }

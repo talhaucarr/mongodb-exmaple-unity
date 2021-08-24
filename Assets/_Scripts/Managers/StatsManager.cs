@@ -9,7 +9,6 @@ public class StatsManager : ScriptableSingleton<StatsManager>
 {
     [Header("Informations")]
     [SerializeField] [ShowOnly] private string username;
-    [SerializeField] [ShowOnly] private string characterClass;
     [SerializeField] [ShowOnly] private int level;
     [SerializeField] [ShowOnly] private int exp;
 
