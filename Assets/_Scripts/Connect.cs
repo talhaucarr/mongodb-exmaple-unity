@@ -32,7 +32,7 @@ public class Connect : MonoBehaviourPunCallbacks
     {
         Debug.Log("Room girildi");
 
-        GameObject test = PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity, 0 ,null);
+        GameObject test = PhotonNetwork.Instantiate("Player", new Vector3(0, .5f, 0), Quaternion.identity, 0 ,null);
         test.GetComponent<PhotonView>().Owner.NickName = "tallatalla";
 
     }

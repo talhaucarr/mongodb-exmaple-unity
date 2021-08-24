@@ -5,5 +5,5 @@ using UnityEngine;
 public interface IMovementModule
 {
 
-    void Move(Vector3 dir);
+    void Move(Vector3 destination);
 }

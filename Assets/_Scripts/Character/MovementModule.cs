@@ -1,18 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class MovementModule : MonoBehaviour
+public class MovementModule : MonoBehaviour, IMovementModule
 {
-    // Start is called before the first frame update
-    void Start()
+    private NavMeshAgent _navMeshAgent;
+
+    private void Start()
     {
-        
+        _navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Move(Vector3 destination)
     {
-        
+        _navMeshAgent.destination = destination;
     }
 }
