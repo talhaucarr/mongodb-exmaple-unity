@@ -40,7 +40,7 @@ namespace _Scripts.Character
             Move(destination);
         }
 
-        private void Move(Vector3 destination)
+        public void Move(Vector3 destination)
         {
             _navMeshAgent.destination = destination;
             _navMeshAgent.isStopped = false;

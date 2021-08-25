@@ -19,13 +19,13 @@ namespace _Scripts.Combat
         }
 
         private void Update()
-        {
+        {   
             if (_enemy == null)
                 return;
 
-            Debug.Log(IsInRange(_enemy));
-            if (!IsInRange(_enemy))
-                _movementModule.StartMoveAction(_enemy.position);
+            Debug.Log(IsInRange());
+            if (!IsInRange())
+                _movementModule.Move(_enemy.position);
             
             else
                 _movementModule.Stop();
@@ -40,10 +40,10 @@ namespace _Scripts.Combat
         {
             _enemy = null;
         }
-        private bool IsInRange(Transform enemy)
+        private bool IsInRange()
         {
-            Debug.Log(Vector3.Distance(enemy.position, transform.position));
-            return Vector3.Distance(enemy.position, transform.position) < attackRange;
+            Debug.Log(Vector3.Distance(transform.position, _enemy.position));
+            return Vector3.Distance(transform.position, _enemy.position) < attackRange;
         }
     }
 }
