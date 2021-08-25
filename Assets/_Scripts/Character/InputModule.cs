@@ -2,36 +2,65 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class InputModule : MonoBehaviour
+using _Scripts.Combat;
+namespace _Scripts.Character
 {
-    private IMovementModule _movementModule;
-
-    private void Start()
+    public class InputModule : MonoBehaviour
     {
-        _movementModule = GetComponent<MovementModule>();
-    }
-    private void Update()
-    {
-        MovementInput();
-    }
-
-    private void MovementInput()
-    {
-        if (Input.GetMouseButtonDown(0))
+        private IMovementModule _movementModule;
+        private IAttackModule _attackModule;
+        private void Start()
         {
-            MoveToCursor();
+            _movementModule = GetComponent<MovementModule>();
+            _attackModule = GetComponent<AttackModule>();
+        }
+        private void Update()
+        {
+            if (InteractWithCombat())
+                return;
+            if (InteractWithMovement())
+                return;
+            
+        }
+
+        private bool InteractWithCombat()
+        {
+            RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
+            foreach (RaycastHit hit in hits)
+            {
+                if (!hit.transform.gameObject.GetComponent<Tag>().Tags.Contains(Tags.Enemy))
+                    continue;
+
+                GameObject enemy = hit.transform.gameObject;
+                if(Input.GetMouseButtonDown(0))
+                {
+                    _attackModule.Attack(enemy);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        private bool InteractWithMovement()
+        {      
+            Ray ray = GetMouseRay();
+            bool hasHit = Physics.Raycast(ray, out RaycastHit hit);
+
+            if (hasHit)
+            {
+                if (Input.GetMouseButton(0))
+                {
+                    _movementModule.StartMoveAction(hit.point);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        private static Ray GetMouseRay()
+        {
+            return Camera.main.ScreenPointToRay(Input.mousePosition);
         }
     }
 
-    private void MoveToCursor()
-    {
-        
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        bool hasHit = Physics.Raycast(ray, out RaycastHit hit);
-
-        if (hasHit)
-            _movementModule.Move(hit.point);
-        
-    }
 }

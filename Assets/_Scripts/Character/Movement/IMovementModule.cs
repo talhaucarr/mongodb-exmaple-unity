@@ -5,5 +5,6 @@ using UnityEngine;
 public interface IMovementModule
 {
 
-    void Move(Vector3 destination);
+    void StartMoveAction(Vector3 destination);
+    void Stop();
 }

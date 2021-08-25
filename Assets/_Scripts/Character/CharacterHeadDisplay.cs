@@ -2,16 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
-public class CharacterHeadDisplay : MonoBehaviour
+namespace _Scripts.Character
 {
-
-    [SerializeField] private TextMeshProUGUI usernameText;
-
-
-    void Start()
+    public class CharacterHeadDisplay : MonoBehaviour
     {
-        usernameText.text = StatsManager.Instance.Username;
+
+        [SerializeField] private TextMesh usernameText;
+
+
+        void Start()
+        {
+            usernameText.text = StatsManager.Instance.Username;
+        }
+
     }
 
 }
