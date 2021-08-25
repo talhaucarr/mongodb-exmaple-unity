@@ -958,18 +958,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2690033790090883525, guid: fea8fccc0a66a6649811d1ebf5a5a926, type: 3}
-      propertyPath: attackRange
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5707138747819570065, guid: fea8fccc0a66a6649811d1ebf5a5a926, type: 3}
-      propertyPath: m_Acceleration
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 5707138747819570065, guid: fea8fccc0a66a6649811d1ebf5a5a926, type: 3}
-      propertyPath: m_AngularSpeed
-      value: 5000
-      objectReference: {fileID: 0}
     - target: {fileID: 5707138749170558478, guid: fea8fccc0a66a6649811d1ebf5a5a926, type: 3}
       propertyPath: m_RootOrder
       value: 4

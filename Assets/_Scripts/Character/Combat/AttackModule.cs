@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using _Scripts.Character;
-
+using _Scripts.Core;
 namespace _Scripts.Combat
 {
     public class AttackModule : MonoBehaviour, IAttackModule
@@ -10,12 +10,14 @@ namespace _Scripts.Combat
         [SerializeField] private float attackRange;
 
         private IMovementModule _movementModule;
+        private ActionScheduler _actionScheduler;
 
         private Transform _enemy;
 
         private void Start()
         {
             _movementModule = GetComponent<MovementModule>();
+            _actionScheduler = GetComponent<ActionScheduler>();
         }
 
         private void Update()
@@ -33,6 +35,7 @@ namespace _Scripts.Combat
         public void Attack(GameObject enemy)
         {
             Debug.Log(enemy.name);
+            _actionScheduler.StartAction(this);
             _enemy = enemy.transform;            
         }
 

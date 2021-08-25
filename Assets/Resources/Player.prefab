@@ -113,6 +113,7 @@ GameObject:
   - component: {fileID: 5707138747819570064}
   - component: {fileID: 2690033790090883525}
   - component: {fileID: 87217281}
+  - component: {fileID: 6028552093859027158}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -188,9 +189,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 5.66
-  m_Acceleration: 8
+  m_Acceleration: 50
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 5000
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -293,6 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b99f0395fe302e4aaa73983e900feb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackRange: 5
 --- !u!114 &87217281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,6 +308,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tags: 03000000
+--- !u!114 &6028552093859027158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5707138749170558706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61631dc55e8f36747ba2259c751a8f4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &609448683597464993
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using _Scripts.Combat;
+using _Scripts.Core;
 
 namespace _Scripts.Character
 {
     public class MovementModule : MonoBehaviour, IMovementModule
     {
+        private ActionScheduler _actionScheduler;
         private IAttackModule _attackModule;
         private NavMeshAgent _navMeshAgent;
         private Animator _animator;
@@ -16,6 +18,7 @@ namespace _Scripts.Character
 
         private void Start()
         {
+            _actionScheduler = GetComponent<ActionScheduler>();
             _attackModule = GetComponent<AttackModule>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
@@ -36,6 +39,7 @@ namespace _Scripts.Character
 
         public void StartMoveAction(Vector3 destination)
         {
+            _actionScheduler.StartAction(this);
             _attackModule.AttackCancel();
             Move(destination);
         }
