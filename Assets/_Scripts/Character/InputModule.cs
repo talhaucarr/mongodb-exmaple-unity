@@ -2,24 +2,33 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using _Scripts.Combat;
+using _Scripts.Character.Combat;
+using Photon.Pun;
+
+
 namespace _Scripts.Character
 {
     public class InputModule : MonoBehaviour
     {
         private IMovementModule _movementModule;
         private IAttackModule _attackModule;
+        private PhotonView _pw;
         private void Start()
         {
             _movementModule = GetComponent<MovementModule>();
             _attackModule = GetComponent<AttackModule>();
+            _pw = GetComponent<PhotonView>();
         }
         private void Update()
         {
-            if (InteractWithCombat())
-                return;
-            if (InteractWithMovement())
-                return;
+            if (_pw.IsMine)
+            {
+                if (InteractWithCombat())
+                    return;
+                if (InteractWithMovement())
+                    return;
+            }
+            
             
         }
 
@@ -61,6 +70,7 @@ namespace _Scripts.Character
         {
             return Camera.main.ScreenPointToRay(Input.mousePosition);
         }
+        
     }
 
 }

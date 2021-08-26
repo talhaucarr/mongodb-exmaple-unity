@@ -5,5 +5,4 @@ using UnityEngine;
 public interface IAttackModule
 {
     void Attack(GameObject enemy);
-    void AttackCancel();
 }

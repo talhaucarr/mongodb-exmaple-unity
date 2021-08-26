@@ -7,12 +7,16 @@ namespace _Scripts.Core
     public class ActionScheduler : MonoBehaviour
     {
 
-        private MonoBehaviour _currentAction;
-        public void StartAction(MonoBehaviour action)
+        private IAction _currentAction;
+        public void StartAction(IAction action)
         {
-            Debug.Log("canceling action:" + action);
+            if(_currentAction == action) return;;
+            if (_currentAction != null)
+            {
+                _currentAction.Cancel();
+            }
+
             _currentAction = action;
-            Debug.Log("current action:" + _currentAction);
         }
     }
 }

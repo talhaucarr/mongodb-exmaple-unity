@@ -8,5 +8,5 @@ public interface IMovementModule
     void StartMoveAction(Vector3 destination);
 
     void Move(Vector3 destination);
-    void Stop();
+    void Cancel();
 }

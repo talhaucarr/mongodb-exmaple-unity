@@ -3,18 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using _Scripts.Combat;
+using _Scripts.Character.Combat;
 using _Scripts.Core;
 
 namespace _Scripts.Character
 {
-    public class MovementModule : MonoBehaviour, IMovementModule
+    public class MovementModule : MonoBehaviour, IMovementModule, IAction
     {
         private ActionScheduler _actionScheduler;
-        private IAttackModule _attackModule;
+        private AttackModule _attackModule;
         private NavMeshAgent _navMeshAgent;
         private Animator _animator;
-
+        
 
         private void Start()
         {
@@ -40,7 +40,6 @@ namespace _Scripts.Character
         public void StartMoveAction(Vector3 destination)
         {
             _actionScheduler.StartAction(this);
-            _attackModule.AttackCancel();
             Move(destination);
         }
 
@@ -50,10 +49,12 @@ namespace _Scripts.Character
             _navMeshAgent.isStopped = false;
         }
 
-        public void Stop()
+        public void Cancel()
         {
             _navMeshAgent.isStopped = true;
         }
+
+
     }
 }
 
