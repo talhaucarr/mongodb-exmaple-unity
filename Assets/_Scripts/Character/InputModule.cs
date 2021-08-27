@@ -48,7 +48,7 @@ namespace _Scripts.Character
                     continue;
 
                 GameObject enemy = hit.transform.gameObject;
-                if(Input.GetMouseButtonDown(0))
+                if(Input.GetMouseButton(0))
                 {
                     _attackModule.Attack(enemy);
                 }
