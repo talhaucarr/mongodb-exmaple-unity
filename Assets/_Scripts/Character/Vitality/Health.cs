@@ -6,109 +6,118 @@ using UnityEngine.Serialization;
 
 namespace _Scripts.Character.Vitality
 {
-    public class Health : MonoBehaviour
-{
-    [Header("Options")]
-    [SerializeField] private float maxHealth;
-
-    [Header("Monitors")]
-    [SerializeField] [ShowOnly] private float _curHealth;
-    [SerializeField] [ShowOnly] private bool _isImmune = false;
-
-    //private StatsController _statsController;
-
-    private void Start()
-    {      
-        //_statsController = GetComponent<StatsController>();
-       // _statsController.onStatsChanged += InitHealth;
-        InitHealth();
-    }
-
-    private void OnDestroy()
+        public class Health : MonoBehaviour
     {
-        //_statsController.onStatsChanged -= InitHealth;
-    }
+        [Header("Options")]
+        [SerializeField] private float maxHealth;
 
-    public void SetHealth(float health)
-    {
-        _curHealth = health;
-    }
+        [FormerlySerializedAs("_curHealth")]
+        [Header("Monitors")]
+        [SerializeField] [ShowOnly] private float curHealth;
+        [SerializeField] [ShowOnly] private bool isImmune = false;
 
-    private void InitHealth()
-    {
-        maxHealth = 100;
-        _curHealth = 100;
-    }
+        private Animator _animator;
 
-    public void TakeDamage(float damage)
-    {
-        if (_isImmune) return;
-    
-        _curHealth -= damage;
-        Debug.Log(_curHealth);
-        if(IsDead())
+        private bool _isDead = false;
+
+        //private StatsController _statsController;
+
+        private void Start()
+        {      
+            //_statsController = GetComponent<StatsController>();
+           // _statsController.onStatsChanged += InitHealth;
+           _animator = GetComponent<Animator>();
+            InitHealth();
+        }
+
+        private void OnDestroy()
         {
-            _curHealth = 0;
+            //_statsController.onStatsChanged -= InitHealth;
+        }
+
+        public void SetHealth(float health)
+        {
+            curHealth = health;
+        }
+
+        private void InitHealth()
+        {
+            maxHealth = 100;
+            curHealth = 100;
+        }
+
+        public void TakeDamage(float damage)
+        {
+            if (isImmune) return;
+        
+            curHealth -= damage;
+            Debug.Log(curHealth);
+            
+            if (!IsDead()) return;
+            curHealth = 0;
             Death();
         }
-    }
 
-    public void HealDamage(float healAmount)
-    {
-        _curHealth = Mathf.Clamp(_curHealth + healAmount, 0, maxHealth);
-    }
-
-    
-
-    private void StartBleeding(float bleedingDamage, float bleedingTime, float bleedingRate = .2f)//Ask Gokay
-    {
-        StartCoroutine(BleedingRoutine(bleedingDamage, bleedingTime, bleedingRate));
-    }  
-
-    public IEnumerator BleedingRoutine(float bleedingDamage, float bleedingTime, float bleedingRate)//AskGokay
-    {
-        float bleedingStopTime = Time.time + bleedingTime;
-        while (Time.time < bleedingStopTime)
+        public void HealDamage(float healAmount)
         {
-            TakeDamage(bleedingDamage);
-            yield return new WaitForSeconds(bleedingRate);
-        }            
-    }
+            curHealth = Mathf.Clamp(curHealth + healAmount, 0, maxHealth);
+        }
 
-    public void StartHealthRegen(float regenAmount, float regenTime, float regenRate = .2f)//Ask Gokay
-    {
-        StartCoroutine(HealthRegenRoutine(regenAmount, regenTime, regenRate));
-    }
+        
 
-    private IEnumerator HealthRegenRoutine(float regenAmount, float regenTime, float regenRate )//AskGokay
-    {
-        while (Time.time < regenTime)
+        private void StartBleeding(float bleedingDamage, float bleedingTime, float bleedingRate = .2f)//Ask Gokay
         {
-            HealDamage(regenAmount);
-            yield return new WaitForSeconds(regenRate);
+            StartCoroutine(BleedingRoutine(bleedingDamage, bleedingTime, bleedingRate));
+        }  
+
+        public IEnumerator BleedingRoutine(float bleedingDamage, float bleedingTime, float bleedingRate)//AskGokay
+        {
+            float bleedingStopTime = Time.time + bleedingTime;
+            while (Time.time < bleedingStopTime)
+            {
+                TakeDamage(bleedingDamage);
+                yield return new WaitForSeconds(bleedingRate);
+            }            
+        }
+
+        public void StartHealthRegen(float regenAmount, float regenTime, float regenRate = .2f)//Ask Gokay
+        {
+            StartCoroutine(HealthRegenRoutine(regenAmount, regenTime, regenRate));
+        }
+
+        private IEnumerator HealthRegenRoutine(float regenAmount, float regenTime, float regenRate )//AskGokay
+        {
+            while (Time.time < regenTime)
+            {
+                HealDamage(regenAmount);
+                yield return new WaitForSeconds(regenRate);
+            }
+        }
+
+        public void EnterImmune(float blockTime)
+        {
+            isImmune = true;
+            Invoke(nameof(ExitImmune), blockTime);
+        }
+
+        private void ExitImmune()
+        {
+            isImmune = false;
+        }
+
+        public bool IsDead()
+        {
+            return curHealth <= 0;
+        }
+
+        private void Death()
+        {
+            if(_isDead) return;
+
+            _isDead = true;
+            _animator.SetTrigger("die");
+            //Destroy(gameObject);
         }
     }
-
-    public void EnterImmune(float blockTime)
-    {
-        _isImmune = true;
-        Invoke(nameof(ExitImmune), blockTime);
-    }
-
-    private void ExitImmune()
-    {
-        _isImmune = false;
-    }
-
-    private bool IsDead()
-    {
-        return _curHealth <= 0;
-    }
-
-    private void Death()
-    {
-        Destroy(gameObject);
-    }
-}
 }
 

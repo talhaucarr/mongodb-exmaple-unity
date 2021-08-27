@@ -37,7 +37,9 @@ namespace _Scripts.Character
             RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
             foreach (RaycastHit hit in hits)
             {
-                if (!hit.transform.gameObject.GetComponent<Tag>().Tags.Contains(Tags.Enemy))
+                /*if (!hit.transform.gameObject.GetComponent<Tag>().Tags.Contains(Tags.Enemy))
+                    continue;*/
+                if(!_attackModule.CanAttack(hit.transform.gameObject))
                     continue;
 
                 GameObject enemy = hit.transform.gameObject;

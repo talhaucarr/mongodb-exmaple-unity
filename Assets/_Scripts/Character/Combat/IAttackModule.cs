@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface IAttackModule
 {
+    bool CanAttack(GameObject enemy);
     void Attack(GameObject enemy);
 }

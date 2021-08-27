@@ -14,10 +14,7 @@ namespace _Scripts.Character.Combat
         private IMovementModule _movementModule;
         private ActionScheduler _actionScheduler;
         private Animator _animator;
-
-        private Health _health;
-        
-        private Transform _enemy;
+        private Health _enemy;
 
         private float _timeSinceLastAttack = 0;
 
@@ -35,50 +32,72 @@ namespace _Scripts.Character.Combat
             if (_enemy == null)
                 return;
             
+            if(_enemy.IsDead()) return;
+            
             if (!IsInRange())
-                _movementModule.Move(_enemy.position);
+                _movementModule.Move(_enemy.transform.position);
 
             else
             {
                 _movementModule.Cancel();
                 AttackBehaviour();
             }
-                
         }
 
         private void AttackBehaviour()
         {
+            transform.LookAt(_enemy.transform);
             if (!(_timeSinceLastAttack > timeBetweenAttacks)) return;
-            _animator.SetTrigger("attack");
+            
+            TriggerAttack();
             _timeSinceLastAttack = 0;
             
+        }
+
+        private void TriggerAttack()
+        {
+            _animator.ResetTrigger("attackCancel");
+            _animator.SetTrigger("attack");
+        }
+
+        public bool CanAttack(GameObject enemy)
+        {
+            if (enemy == null)
+                return false;
+            Health test = enemy.GetComponent<Health>();
+            return test != null && !test.IsDead();
         }
         
         public void Attack(GameObject enemy)
         {
             Debug.Log(enemy.name);
             _actionScheduler.StartAction(this);
-            _enemy = enemy.transform;            
+            _enemy = enemy.GetComponent<Health>();            
         }
-
-        
         
         private bool IsInRange()
         {
-            return Vector3.Distance(transform.position, _enemy.position) < attackRange;
+            return Vector3.Distance(transform.position, _enemy.transform.position) < attackRange;
         }
 
         public void Cancel()
         {
+            StopAttack();
             _enemy = null;
         }
-        
+
+        private void StopAttack()
+        {
+            _animator.ResetTrigger("attack");
+            _animator.SetTrigger("attackCancel");
+        }
+
         //Animation Event
         void Hit()
         {
-            _enemy.GetComponent<Health>().TakeDamage(10);//weapon damage
+            if(_enemy == null) return;
+            _enemy.TakeDamage(10);//weapon damage
         }
-        
     }
 }
 
