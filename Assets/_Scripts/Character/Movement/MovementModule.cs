@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using _Scripts.Character.Combat;
+using _Scripts.Character.Vitality;
 using _Scripts.Core;
 
 namespace _Scripts.Character
@@ -13,19 +14,21 @@ namespace _Scripts.Character
         private ActionScheduler _actionScheduler;
         private AttackModule _attackModule;
         private NavMeshAgent _navMeshAgent;
+        private Health _health;
         private Animator _animator;
         
-
         private void Start()
         {
             _actionScheduler = GetComponent<ActionScheduler>();
             _attackModule = GetComponent<AttackModule>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
+            _health = GetComponent<Health>();
         }
 
         private void Update()
         {
+            _navMeshAgent.enabled = !_health.IsDead();
             UpdateAnimator();
         }
 
@@ -53,8 +56,6 @@ namespace _Scripts.Character
         {
             _navMeshAgent.isStopped = true;
         }
-
-
     }
 }
 

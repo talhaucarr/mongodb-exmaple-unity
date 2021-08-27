@@ -16,7 +16,7 @@ namespace _Scripts.Character.Combat
         private Animator _animator;
         private Health _enemy;
 
-        private float _timeSinceLastAttack = 0;
+        private float _timeSinceLastAttack = Mathf.Infinity;
 
         private void Start()
         {
@@ -62,6 +62,7 @@ namespace _Scripts.Character.Combat
 
         public bool CanAttack(GameObject enemy)
         {
+            Debug.Log(enemy);
             if (enemy == null)
                 return false;
             Health test = enemy.GetComponent<Health>();

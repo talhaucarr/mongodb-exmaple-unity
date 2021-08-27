@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using _Scripts.Character.Combat;
+using _Scripts.Character.Vitality;
 using Photon.Pun;
 
 
@@ -12,24 +13,28 @@ namespace _Scripts.Character
     {
         private IMovementModule _movementModule;
         private IAttackModule _attackModule;
+        private Health _health;
+        
         private PhotonView _pw;
         private void Start()
         {
             _movementModule = GetComponent<MovementModule>();
             _attackModule = GetComponent<AttackModule>();
+            _health = GetComponent<Health>();
+            
             _pw = GetComponent<PhotonView>();
         }
+        
         private void Update()
         {
-            if (_pw.IsMine)
-            {
-                if (InteractWithCombat())
-                    return;
-                if (InteractWithMovement())
-                    return;
-            }
+            if (!_pw.IsMine) return;
             
-            
+            if(_health.IsDead()) return;;
+                
+            if (InteractWithCombat())
+                return;
+            if (InteractWithMovement())
+                return;
         }
 
         private bool InteractWithCombat()
@@ -37,8 +42,8 @@ namespace _Scripts.Character
             RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
             foreach (RaycastHit hit in hits)
             {
-                /*if (!hit.transform.gameObject.GetComponent<Tag>().Tags.Contains(Tags.Enemy))
-                    continue;*/
+                if (!hit.transform.gameObject.GetComponent<Tag>().Tags.Contains(Tags.Enemy))
+                    continue;
                 if(!_attackModule.CanAttack(hit.transform.gameObject))
                     continue;
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using _Scripts.Core;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -17,6 +18,7 @@ namespace _Scripts.Character.Vitality
         [SerializeField] [ShowOnly] private bool isImmune = false;
 
         private Animator _animator;
+        private ActionScheduler _actionScheduler;
 
         private bool _isDead = false;
 
@@ -27,6 +29,7 @@ namespace _Scripts.Character.Vitality
             //_statsController = GetComponent<StatsController>();
            // _statsController.onStatsChanged += InitHealth;
            _animator = GetComponent<Animator>();
+           _actionScheduler = GetComponent<ActionScheduler>();
             InitHealth();
         }
 
@@ -42,8 +45,8 @@ namespace _Scripts.Character.Vitality
 
         private void InitHealth()
         {
-            maxHealth = 100;
-            curHealth = 100;
+           
+            curHealth = maxHealth;
         }
 
         public void TakeDamage(float damage)
@@ -116,6 +119,7 @@ namespace _Scripts.Character.Vitality
 
             _isDead = true;
             _animator.SetTrigger("die");
+            _actionScheduler.CancelCurrentAction();
             //Destroy(gameObject);
         }
     }
