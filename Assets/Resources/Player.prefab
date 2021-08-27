@@ -99,13 +99,17 @@ PrefabInstance:
       propertyPath: attackRange
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5707138747819570063, guid: fea8fccc0a66a6649811d1ebf5a5a926, type: 3}
+      propertyPath: maxSpeed
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5707138749170558478, guid: fea8fccc0a66a6649811d1ebf5a5a926, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5707138749170558478, guid: fea8fccc0a66a6649811d1ebf5a5a926, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.25
+      value: 0.72
       objectReference: {fileID: 0}
     - target: {fileID: 5707138749170558478, guid: fea8fccc0a66a6649811d1ebf5a5a926, type: 3}
       propertyPath: m_LocalPosition.y
@@ -113,7 +117,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5707138749170558478, guid: fea8fccc0a66a6649811d1ebf5a5a926, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.2549517
+      value: 19.6
       objectReference: {fileID: 0}
     - target: {fileID: 5707138749170558478, guid: fea8fccc0a66a6649811d1ebf5a5a926, type: 3}
       propertyPath: m_LocalRotation.w

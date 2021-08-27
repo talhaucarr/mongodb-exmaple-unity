@@ -35,7 +35,7 @@ namespace _Scripts.Character.Combat
             if(_enemy.IsDead()) return;
             
             if (!IsInRange())
-                _movementModule.Move(_enemy.transform.position);
+                _movementModule.Move(_enemy.transform.position, 1f);
 
             else
             {

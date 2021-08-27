@@ -5,8 +5,8 @@ using UnityEngine;
 public interface IMovementModule
 {
 
-    void StartMoveAction(Vector3 destination);
+    void StartMoveAction(Vector3 destination, float speedFraction);
 
-    void Move(Vector3 destination);
+    void Move(Vector3 destination, float speedFraction);
     void Cancel();
 }

@@ -20,6 +20,9 @@ namespace _Scripts.Enemy
         [SerializeField] private float waypointDwellTime;
         [SerializeField] private PatrolPath patrolPath;
         [SerializeField] private float wayPointTolerance;
+        
+        [Range(0,1)]
+        [SerializeField] private float patrolSpeedFraction = 0.2f;
 
         private AttackModule _attackModule;
         private Health _health;
@@ -88,7 +91,7 @@ namespace _Scripts.Enemy
 
             if (_timeSinceArrivedWaypoint > waypointDwellTime)
             {
-                _movementModule.StartMoveAction(nextPos);
+                _movementModule.StartMoveAction(nextPos, patrolSpeedFraction);
             }
         }
 

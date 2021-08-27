@@ -41,8 +41,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 287c424f8fe639f4e96b264d12be4ce3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseDistance: 5
-  suspicionTime: 0
+  chaseDistance: 4.17
+  suspicionTime: 5
+  waypointDwellTime: 3
+  patrolPath: {fileID: 0}
+  wayPointTolerance: 1
+  patrolSpeedFraction: 0.2
 --- !u!1001 &8276888147466357615
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -165,6 +169,10 @@ PrefabInstance:
       propertyPath: timeBetweenAttacks
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5707138747819570063, guid: fea8fccc0a66a6649811d1ebf5a5a926, type: 3}
+      propertyPath: maxSpeed
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5707138747819570065, guid: fea8fccc0a66a6649811d1ebf5a5a926, type: 3}
       propertyPath: m_Speed
       value: 3
@@ -183,7 +191,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5707138749170558478, guid: fea8fccc0a66a6649811d1ebf5a5a926, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.3457737
+      value: 20.54
       objectReference: {fileID: 0}
     - target: {fileID: 5707138749170558478, guid: fea8fccc0a66a6649811d1ebf5a5a926, type: 3}
       propertyPath: m_LocalRotation.w

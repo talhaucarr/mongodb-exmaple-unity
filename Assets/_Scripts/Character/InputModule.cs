@@ -11,6 +11,8 @@ namespace _Scripts.Character
 {
     public class InputModule : MonoBehaviour
     {
+
+        [SerializeField] private Camera _camera;
         private IMovementModule _movementModule;
         private IAttackModule _attackModule;
         private Health _health;
@@ -66,16 +68,16 @@ namespace _Scripts.Character
             {
                 if (Input.GetMouseButton(0))
                 {
-                    _movementModule.StartMoveAction(hit.point);
+                    _movementModule.StartMoveAction(hit.point, 1f);
                 }
                 return true;
             }
             return false;
         }
 
-        private static Ray GetMouseRay()
+        private Ray GetMouseRay()
         {
-            return Camera.main.ScreenPointToRay(Input.mousePosition);
+            return _camera.ScreenPointToRay(Input.mousePosition);
         }
         
     }

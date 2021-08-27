@@ -11,8 +11,12 @@ namespace _Scripts.Character
 {
     public class MovementModule : MonoBehaviour, IMovementModule, IAction
     {
+        [SerializeField] private float maxSpeed = 6f;
+        
         private ActionScheduler _actionScheduler;
         private AttackModule _attackModule;
+        
+        
         private NavMeshAgent _navMeshAgent;
         private Health _health;
         private Animator _animator;
@@ -40,15 +44,16 @@ namespace _Scripts.Character
             _animator.SetFloat("forwardSpeed", speed);
         }
 
-        public void StartMoveAction(Vector3 destination)
+        public void StartMoveAction(Vector3 destination, float speedFraction)
         {
             _actionScheduler.StartAction(this);
-            Move(destination);
+            Move(destination, speedFraction);
         }
 
-        public void Move(Vector3 destination)
+        public void Move(Vector3 destination, float speedFraction)
         {
             _navMeshAgent.destination = destination;
+            _navMeshAgent.speed = maxSpeed * Mathf.Clamp01(speedFraction);
             _navMeshAgent.isStopped = false;
         }
 
