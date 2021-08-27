@@ -42,6 +42,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chaseDistance: 5
+  suspicionTime: 0
 --- !u!1001 &8276888147466357615
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -214,11 +215,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5707138749170558706, guid: fea8fccc0a66a6649811d1ebf5a5a926, type: 3}
       propertyPath: m_Name
-      value: Enemy (2)
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 7666050195341015720, guid: fea8fccc0a66a6649811d1ebf5a5a926, type: 3}
       propertyPath: sceneViewId
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fea8fccc0a66a6649811d1ebf5a5a926, type: 3}
