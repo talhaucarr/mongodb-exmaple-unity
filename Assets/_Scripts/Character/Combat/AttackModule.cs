@@ -85,6 +85,7 @@ namespace _Scripts.Character.Combat
         {
             StopAttack();
             _enemy = null;
+            _movementModule.Cancel();
         }
 
         private void StopAttack()
