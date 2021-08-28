@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!136 &1655833264
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8277978944368843326}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.3
+  m_Height: 1.79
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.82, z: 0}
 --- !u!114 &-6680190789911900621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12,6 +26,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5bd1ad419fb4c1499b6d41aef7cfc40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _camera: {fileID: 0}
 --- !u!114 &192426569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24,7 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93bce903c6dffdd428b460c905715501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
+  maxHealth: 1000
   curHealth: 0
   isImmune: 0
 --- !u!1001 &1797453183737458301
@@ -109,7 +124,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5707138749170558478, guid: fea8fccc0a66a6649811d1ebf5a5a926, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.72
+      value: 8.47
       objectReference: {fileID: 0}
     - target: {fileID: 5707138749170558478, guid: fea8fccc0a66a6649811d1ebf5a5a926, type: 3}
       propertyPath: m_LocalPosition.y
@@ -117,7 +132,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5707138749170558478, guid: fea8fccc0a66a6649811d1ebf5a5a926, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 19.6
+      value: -10.3
       objectReference: {fileID: 0}
     - target: {fileID: 5707138749170558478, guid: fea8fccc0a66a6649811d1ebf5a5a926, type: 3}
       propertyPath: m_LocalRotation.w
@@ -149,6 +164,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5707138749170558706, guid: fea8fccc0a66a6649811d1ebf5a5a926, type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5707138749170558706, guid: fea8fccc0a66a6649811d1ebf5a5a926, type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7666050195341015720, guid: fea8fccc0a66a6649811d1ebf5a5a926, type: 3}
