@@ -4,14 +4,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 
 namespace _Scripts.SceneManagement
 {
     public class Portal : MonoBehaviour
     {
+        enum DestinationIdentifier
+        {
+            A, B, C, D
+        }
+        
         [SerializeField] private int sceneIndex = 0;
         [SerializeField] private Transform spawnPoint;
+        [SerializeField] private DestinationIdentifier destinationIdentifier;
         private void OnTriggerEnter(Collider other)
         {
             if (!other.gameObject.GetComponent<Tag>().Tags.Contains(Tags.Player)) return;
@@ -26,7 +33,7 @@ namespace _Scripts.SceneManagement
             
             yield return SceneManager.LoadSceneAsync(sceneIndex);
             
-            Portal otherPortal = GetOtherPortal();
+            var otherPortal = GetOtherPortal();
             UpdatePlayer(otherPortal);
             
             Destroy(gameObject);
@@ -34,18 +41,20 @@ namespace _Scripts.SceneManagement
 
         private void UpdatePlayer(Portal otherPortal)
         {
-            GameObject player = GameObject.FindWithTag("Player");
-            player.GetComponent<NavMeshAgent>().Warp(player.transform.position = otherPortal.spawnPoint.position);
+            var player = GameObject.FindWithTag("Player");
+            player.transform.position = otherPortal.spawnPoint.position;
             
             player.transform.rotation = otherPortal.spawnPoint.rotation;
-            player.GetComponent<NavMeshAgent>().enabled = true;
+
         }
 
         private Portal GetOtherPortal()
         {
-            foreach (Portal portal in FindObjectsOfType<Portal>())
+            foreach (var portal in FindObjectsOfType<Portal>())
             {
                 if(portal == this)
+                    continue;
+                if(portal.destinationIdentifier != destinationIdentifier) 
                     continue;
 
                 return portal;
