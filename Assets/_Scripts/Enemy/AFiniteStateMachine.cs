@@ -13,8 +13,7 @@ public enum FSMStateType
 public abstract class AFiniteStateMachine : ScriptableObject
 {
     protected FSMController _fsm;
-
-
+    
     public FSMStateType StateType { get; protected set; }
 
     public virtual void OnEnable() { }
