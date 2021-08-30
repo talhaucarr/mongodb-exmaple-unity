@@ -10,6 +10,8 @@ namespace _Scripts.Character.Combat
     {
         [SerializeField] private float attackRange;
         [SerializeField] private float timeBetweenAttacks;
+        [SerializeField] private GameObject weaponPrefab = null;
+        [SerializeField] private Transform handTransform = null;
 
         private IMovementModule _movementModule;
         private ActionScheduler _actionScheduler;
@@ -23,6 +25,13 @@ namespace _Scripts.Character.Combat
             _movementModule = GetComponent<MovementModule>();
             _actionScheduler = GetComponent<ActionScheduler>();
             _animator = GetComponent<Animator>();
+
+            SpawnWeapon();
+        }
+
+        private void SpawnWeapon()
+        {
+            Instantiate(weaponPrefab, handTransform);
         }
 
         private void Update()

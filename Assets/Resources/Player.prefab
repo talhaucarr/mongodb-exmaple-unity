@@ -2653,6 +2653,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackRange: 1
   timeBetweenAttacks: 0
+  weaponPrefab: {fileID: 0}
+  handTransform: {fileID: 0}
 --- !u!114 &370125711459016867
 MonoBehaviour:
   m_ObjectHideFlags: 0
