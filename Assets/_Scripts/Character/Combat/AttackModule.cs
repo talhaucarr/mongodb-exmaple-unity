@@ -4,15 +4,19 @@ using UnityEngine;
 using _Scripts.Character;
 using _Scripts.Character.Vitality;
 using _Scripts.Core;
+using UnityEngine.Serialization;
+
 namespace _Scripts.Character.Combat
 {
     public class AttackModule : MonoBehaviour, IAttackModule, IAction
     {
-        [SerializeField] private float attackRange;
         [SerializeField] private float timeBetweenAttacks;
-        [SerializeField] private GameObject weaponPrefab = null;
-        [SerializeField] private Transform handTransform = null;
+        [SerializeField] private Transform rightHandTransform = null;
+        [SerializeField] private Transform leftHandTransform = null;
+        [SerializeField] private Weapon defaultWeapon = null;
 
+        private Weapon _currentWeapon = null;
+        
         private IMovementModule _movementModule;
         private ActionScheduler _actionScheduler;
         private Animator _animator;
@@ -25,14 +29,17 @@ namespace _Scripts.Character.Combat
             _movementModule = GetComponent<MovementModule>();
             _actionScheduler = GetComponent<ActionScheduler>();
             _animator = GetComponent<Animator>();
-
-            SpawnWeapon();
+            
+            EquipWeapon(defaultWeapon);
         }
 
-        private void SpawnWeapon()
+        public void EquipWeapon(Weapon weapon)
         {
-            Instantiate(weaponPrefab, handTransform);
+            _currentWeapon = weapon;
+            //if(weapon == null) return;
+            weapon.Spawn(rightHandTransform,leftHandTransform, _animator);
         }
+        
 
         private void Update()
         {
@@ -87,7 +94,7 @@ namespace _Scripts.Character.Combat
         
         private bool IsInRange()
         {
-            return Vector3.Distance(transform.position, _enemy.transform.position) < attackRange;
+            return Vector3.Distance(transform.position, _enemy.transform.position) < _currentWeapon.AttackRange();
         }
 
         public void Cancel()
@@ -107,7 +114,7 @@ namespace _Scripts.Character.Combat
         void Hit()
         {
             if(_enemy == null) return;
-            _enemy.TakeDamage(10);//weapon damage
+            _enemy.TakeDamage(_currentWeapon.AttackDamage());//weapon damage
         }
     }
 }

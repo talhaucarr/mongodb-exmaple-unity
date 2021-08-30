@@ -2518,8 +2518,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b99f0395fe302e4aaa73983e900feb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 2
   timeBetweenAttacks: 1
+  rightHandTransform: {fileID: 2226674948431135405}
+  leftHandTransform: {fileID: 2226674948431078063}
+  defaultWeapon: {fileID: 11400000, guid: 1917e3ba56175184f8b9a9c3c950ed0d, type: 2}
 --- !u!114 &1547907315342637616
 MonoBehaviour:
   m_ObjectHideFlags: 0
