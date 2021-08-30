@@ -2,71 +2,94 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
-using _Scripts.Managers;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace _Scripts.Saving
 {
-    public class SavingSystem : MonoBehaviour, ISavingSystem
+    public class SavingSystem : MonoBehaviour
     {
-        public void Save(string saveFile)
+        public IEnumerator LoadLastScene(string saveFile)
         {
-            string path = GetPathFromSaveFile(saveFile);
-            Debug.Log($"Saving to: {path}");
-            using (FileStream stream = File.Open(path, FileMode.Create))
+            Dictionary<string, object> state = LoadFile(saveFile);
+            int buildIndex = SceneManager.GetActiveScene().buildIndex;
+            if (state.ContainsKey("lastSceneBuildIndex"))
             {
-                Transform playerTransform = GetPlayerTransform();
-                byte[] buffer = SerializeVector(playerTransform.position);
-                
-                stream.Write(buffer, 0, buffer.Length);
+                buildIndex = (int)state["lastSceneBuildIndex"];
             }
+            yield return SceneManager.LoadSceneAsync(buildIndex);
+            RestoreState(state);
         }
 
-       
+        public void Save(string saveFile)
+        {
+            Dictionary<string, object> state = LoadFile(saveFile);
+            CaptureState(state);
+            SaveFile(saveFile, state);
+        }
 
         public void Load(string saveFile)
         {
-            Debug.Log($"Loading from: {GetPathFromSaveFile(saveFile)}");
+            RestoreState(LoadFile(saveFile));
+        }
+
+        public void Delete(string saveFile)
+        {
+            File.Delete(GetPathFromSaveFile(saveFile));
+        }
+
+        private Dictionary<string, object> LoadFile(string saveFile)
+        {
             string path = GetPathFromSaveFile(saveFile);
+            if (!File.Exists(path))
+            {
+                return new Dictionary<string, object>();
+            }
             using (FileStream stream = File.Open(path, FileMode.Open))
             {
-                byte[] buffer = new byte[stream.Length];
-                stream.Read(buffer, 0, buffer.Length);
-
-                PlayerManager.Instance.Player.position = DeserializeVector(buffer);
+                BinaryFormatter formatter = new BinaryFormatter();
+                return (Dictionary<string, object>)formatter.Deserialize(stream);
             }
         }
-        private Transform GetPlayerTransform()
+
+        private void SaveFile(string saveFile, object state)
         {
-            return PlayerManager.Instance.Player;
+            string path = GetPathFromSaveFile(saveFile);
+            print("Saving to " + path);
+            using (FileStream stream = File.Open(path, FileMode.Create))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(stream, state);
+            }
         }
 
-        private byte[] SerializeVector(Vector3 vector)
+        private void CaptureState(Dictionary<string, object> state)
         {
-            byte[] vectorBytes = new byte[3 * 4];
-            BitConverter.GetBytes(vector.x).CopyTo(vectorBytes, 0);
-            BitConverter.GetBytes(vector.y).CopyTo(vectorBytes, 4);
-            BitConverter.GetBytes(vector.z).CopyTo(vectorBytes, 8);
+            foreach (SaveableEntity saveable in FindObjectsOfType<SaveableEntity>())
+            {
+                state[saveable.GetUniqueIdentifier()] = saveable.CaptureState();
+            }
 
-            return vectorBytes;
+            state["lastSceneBuildIndex"] = SceneManager.GetActiveScene().buildIndex;
         }
 
-        private Vector3 DeserializeVector(byte[] buffer)
+        private void RestoreState(Dictionary<string, object> state)
         {
-            Vector3 result = new Vector3();
-            result.x = BitConverter.ToSingle(buffer, 0);
-            result.y = BitConverter.ToSingle(buffer, 4);
-            result.z = BitConverter.ToSingle(buffer, 8);
-            
-            return result;
+            foreach (SaveableEntity saveable in FindObjectsOfType<SaveableEntity>())
+            {
+                string id = saveable.GetUniqueIdentifier();
+                if (state.ContainsKey(id))
+                {
+                    saveable.RestoreState(state[id]);
+                }
+            }
         }
-        
+
         private string GetPathFromSaveFile(string saveFile)
         {
             return Path.Combine(Application.persistentDataPath, saveFile + ".sav");
         }
     }
 }
-
-
