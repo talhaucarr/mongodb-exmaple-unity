@@ -111,10 +111,23 @@ namespace _Scripts.Character.Combat
         }
 
         //Animation Event
-        void Hit()
+        void Hit()//TODO: damage before the projectile reaches
         {
             if(_enemy == null) return;
+            
+            if (_currentWeapon.HasProjectile())
+                _currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, _enemy);
+
+            else
+                _enemy.TakeDamage(_currentWeapon.AttackDamage());
+            
+            
             _enemy.TakeDamage(_currentWeapon.AttackDamage());//weapon damage
+        }
+
+        void Shoot()
+        {
+            Hit();
         }
     }
 }
