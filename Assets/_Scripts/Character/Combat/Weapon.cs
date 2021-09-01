@@ -19,20 +19,43 @@ namespace _Scripts.Character.Combat
         [SerializeField] private bool isRightHanded = true;
         [SerializeField] private Projectile projectile = null;
 
+        private const string WeaponName = "Weapon";
+
         public void Spawn(Transform rightHandTransform, Transform leftHandTransform, Animator animator)
         {
+            DestroyOldWeapon(rightHandTransform, leftHandTransform);
+            
             if (weaponPrefab != null)
             {
                 
                 Transform handTransform = GetTransform(rightHandTransform, leftHandTransform);
-                Instantiate(weaponPrefab, handTransform);
+                GameObject weapon = Instantiate(weaponPrefab, handTransform);
+                weapon.name = WeaponName;
             }
-                
+
+            var overrideController = animator.runtimeAnimatorController as AnimatorOverrideController;
             
-            if(animatorOverride != null)
+            if (animatorOverride != null)
                 animator.runtimeAnimatorController = animatorOverride;
+
+            else if(overrideController != null)
+                animator.runtimeAnimatorController = overrideController.runtimeAnimatorController;
+            
+
         }
-        
+
+        private void DestroyOldWeapon(Transform rightHandTransform, Transform leftHandTransform)
+        {
+            Transform oldWeapon = rightHandTransform.Find(WeaponName);
+            if (oldWeapon == null)
+            {
+                oldWeapon = leftHandTransform.Find(WeaponName);
+            }
+            if(oldWeapon == null) return;
+            
+            Destroy(oldWeapon.gameObject);
+        }
+
         public bool HasProjectile()
         {
             return projectile != null;

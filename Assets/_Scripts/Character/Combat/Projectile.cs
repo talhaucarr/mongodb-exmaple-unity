@@ -10,15 +10,30 @@ namespace _Scripts.Character.Combat
     public class Projectile : MonoBehaviour
     {
         [SerializeField] private float speed = 1;
+        [SerializeField] private bool isHoming = true;
+        [SerializeField] private GameObject hitEffect = null;
+        [SerializeField] private float maxLifeTime = 10;
+        [SerializeField] private GameObject[] destroyOnHit = null;
+        [SerializeField] private float lifeAfterImpact = 2;
         
         private Health _target = null;
         private float _damage = 0;
 
+        private void Start()
+        {
+            transform.LookAt(AimLocation());
+        }
+
         private void Update()
         {
             if(_target == null) return;
+
+            if (isHoming && !_target.IsDead())
+            {
+                transform.LookAt(AimLocation());
+            }
+                
             
-            transform.LookAt(AimLocation());
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
 
@@ -26,6 +41,8 @@ namespace _Scripts.Character.Combat
         {
             this._target = target;
             this._damage = damage;
+            
+            Destroy(gameObject, maxLifeTime);
         }
 
         private Vector3 AimLocation()
@@ -40,9 +57,22 @@ namespace _Scripts.Character.Combat
         private void OnTriggerEnter(Collider other)
         {
             if(other.GetComponent<Health>() != _target) return;
-            Debug.Log("here");
+            if(_target.IsDead()) return;
             _target.TakeDamage(_damage);
-            Destroy(gameObject);
+            
+            speed = 0;
+            
+            if (hitEffect != null)
+            {
+                Instantiate(hitEffect, AimLocation(), transform.rotation);
+            }
+
+            foreach (GameObject toDestroy in destroyOnHit)
+            {
+                Destroy(toDestroy);
+            }
+            
+            Destroy(gameObject, lifeAfterImpact);
         }
     }
 }
