@@ -116,13 +116,10 @@ namespace _Scripts.Character.Combat
             if(_enemy == null) return;
             
             if (_currentWeapon.HasProjectile())
-                _currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, _enemy);
+                _currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, _enemy, gameObject);
 
             else
-                _enemy.TakeDamage(_currentWeapon.AttackDamage());
-            
-            
-            _enemy.TakeDamage(_currentWeapon.AttackDamage());//weapon damage
+                _enemy.TakeDamage(gameObject ,_currentWeapon.AttackDamage());
         }
 
         void Shoot()

@@ -11,9 +11,10 @@ namespace _Scripts.Stats
         [SerializeField] private CharacterClass characterClass;
         [SerializeField] private Progression progression = null;
 
-        public float GetHealth()
+        public float GetStat(Stat stats)
         {
-            return progression.GetHealth(characterClass, startingLevel);
+            
+            return progression.GetStat(stats,characterClass, startingLevel);
         }
     }
 }

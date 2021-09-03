@@ -3,17 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 using _Scripts.Character.Vitality;
-using Microsoft.SqlServer.Server;
 
 
-namespace _Scripts.Character
+namespace _Scripts.Enemy
 {
-    public class CharacterHeadDisplay : MonoBehaviour
+    public class EnemyHeadDisplay : MonoBehaviour
     {
-
-        [SerializeField] private TextMeshProUGUI usernameText;
+        [SerializeField] private TextMeshPro headDisplayText;
 
         private Health _health;
 
@@ -29,8 +26,8 @@ namespace _Scripts.Character
 
         private void UpdateHealthText()
         {
-            usernameText.text = $"{_health.GetPercentHealth()}%";
+            headDisplayText.text = $"Enemy: {_health.GetPercentHealth()}%";
         }
     }
-
 }
+

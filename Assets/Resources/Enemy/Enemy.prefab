@@ -2319,6 +2319,7 @@ GameObject:
   - component: {fileID: 7026546372722598234}
   - component: {fileID: 2298522095715263058}
   - component: {fileID: 4533955314623444909}
+  - component: {fileID: 4751241350596487537}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -2610,3 +2611,16 @@ MonoBehaviour:
   startingLevel: 1
   characterClass: 1
   progression: {fileID: 11400000, guid: b631ef117e95bdd478554627ef12405e, type: 2}
+--- !u!114 &4751241350596487537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6505610142873454659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9b3af51dbab8db4f93157bfa309e846, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  headDisplayText: {fileID: 7057177206333108272}

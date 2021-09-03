@@ -2453,6 +2453,8 @@ GameObject:
   - component: {fileID: 4102901126186351271}
   - component: {fileID: 4427484310730799754}
   - component: {fileID: 7463600993663942637}
+  - component: {fileID: 2034647402}
+  - component: {fileID: 1579167998439471943}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2656,7 +2658,7 @@ MonoBehaviour:
   timeBetweenAttacks: 0
   rightHandTransform: {fileID: 2306327840968994583}
   leftHandTransform: {fileID: 2306327840969052031}
-  defaultWeapon: {fileID: 11400000, guid: 1917e3ba56175184f8b9a9c3c950ed0d, type: 2}
+  defaultWeapon: {fileID: 11400000, guid: 5917469af49631c4aad4fa038182aaa5, type: 2}
 --- !u!114 &370125711459016867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2755,3 +2757,29 @@ MonoBehaviour:
   startingLevel: 1
   characterClass: 0
   progression: {fileID: 11400000, guid: b631ef117e95bdd478554627ef12405e, type: 2}
+--- !u!114 &2034647402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5337090102283702992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38bb4548aadfed946bb04ca12d6244f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usernameText: {fileID: 0}
+--- !u!114 &1579167998439471943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5337090102283702992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8fe5170a1a7e9e49b4bd607a0dea51e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  expPoints: 0

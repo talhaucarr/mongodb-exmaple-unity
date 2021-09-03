@@ -61,10 +61,10 @@ namespace _Scripts.Character.Combat
             return projectile != null;
         }
 
-        public void LaunchProjectile(Transform rightHandTransform, Transform leftHandTransform, Health target)
+        public void LaunchProjectile(Transform rightHandTransform, Transform leftHandTransform, Health target, GameObject instigator)
         {
             Projectile projectileInstance = Instantiate(projectile, GetTransform(rightHandTransform, leftHandTransform).position, Quaternion.identity);
-            projectileInstance.SetTarget(target, attackDamage);
+            projectileInstance.SetTarget(target, instigator, attackDamage);
         }
 
         public float AttackDamage()

@@ -40,8 +40,12 @@ namespace _Scripts.Character.Vitality
         }
         private void InitHealth()
         {
-            maxHealth = _baseStats.GetHealth();
+            maxHealth = _baseStats.GetStat(Stat.Health);
             curHealth = maxHealth;
+        }
+        public float GetPercentHealth()
+        {
+            return 100 * (curHealth / maxHealth);
         }
 
         public void SetHealth(float health)
@@ -50,7 +54,7 @@ namespace _Scripts.Character.Vitality
             curHealth = health;
         }
         
-        public void TakeDamage(float damage)
+        public void TakeDamage(GameObject instigator ,float damage)
         {
             if (isImmune) return;
         
@@ -60,6 +64,16 @@ namespace _Scripts.Character.Vitality
             if (!IsDead()) return;
             curHealth = 0;
             Death();
+            AwardExperience(instigator);
+        }
+
+        private void AwardExperience(GameObject instigator)
+        {
+            Experience experience = instigator.GetComponent<Experience>();
+            if(experience == null)
+                return;
+            experience.GainExperience(GetComponent<BaseStats>().GetStat(Stat.ExperienceReward));
+            
         }
 
         public void HealDamage(float healAmount)
@@ -69,7 +83,7 @@ namespace _Scripts.Character.Vitality
 
         
 
-        private void StartBleeding(float bleedingDamage, float bleedingTime, float bleedingRate = .2f)//Ask Gokay
+        /*private void StartBleeding(float bleedingDamage, float bleedingTime, float bleedingRate = .2f)//Ask Gokay
         {
             StartCoroutine(BleedingRoutine(bleedingDamage, bleedingTime, bleedingRate));
         }  
@@ -82,7 +96,7 @@ namespace _Scripts.Character.Vitality
                 TakeDamage(bleedingDamage);
                 yield return new WaitForSeconds(bleedingRate);
             }            
-        }
+        }*/
 
         public void StartHealthRegen(float regenAmount, float regenTime, float regenRate = .2f)//Ask Gokay
         {
