@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using _Scripts.Core;
+using _Scripts.Stats;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -19,17 +20,17 @@ namespace _Scripts.Character.Vitality
 
         private Animator _animator;
         private ActionScheduler _actionScheduler;
+        private BaseStats _baseStats;
 
         private bool _isDead = false;
 
         //private StatsController _statsController;
 
         private void Start()
-        {      
-            //_statsController = GetComponent<StatsController>();
-           // _statsController.onStatsChanged += InitHealth;
-           _animator = GetComponent<Animator>();
-           _actionScheduler = GetComponent<ActionScheduler>();
+        { 
+            _baseStats = GetComponent<BaseStats>();
+            _animator = GetComponent<Animator>();
+            _actionScheduler = GetComponent<ActionScheduler>();
             InitHealth();
         }
 
@@ -37,18 +38,18 @@ namespace _Scripts.Character.Vitality
         {
             //_statsController.onStatsChanged -= InitHealth;
         }
-
-        public void SetHealth(float health)
-        {
-            curHealth = health;
-        }
-
         private void InitHealth()
         {
-           
+            maxHealth = _baseStats.GetHealth();
             curHealth = maxHealth;
         }
 
+        public void SetHealth(float health)
+        {
+            
+            curHealth = health;
+        }
+        
         public void TakeDamage(float damage)
         {
             if (isImmune) return;
